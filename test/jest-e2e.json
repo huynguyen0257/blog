@@ -1,0 +1,23 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@tommysg/post/(.*)": "<rootDir>/../libs/post/src/$1",
+    "@tommysg/post": "<rootDir>/../libs/post/src",
+    "@tommysg/category/(.*)": "<rootDir>/../libs/category/src/$1",
+    "@tommysg/category": "<rootDir>/../libs/category/src",
+    "@tommysg/tag/(.*)": "<rootDir>/../libs/tag/src/$1",
+    "@tommysg/tag": "<rootDir>/../libs/tag/src",
+    "@tommysg/user/(.*)": "<rootDir>/../libs/user/src/$1",
+    "@tommysg/user": "<rootDir>/../libs/user/src"
+  }
+}
