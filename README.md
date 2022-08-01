@@ -60,27 +60,18 @@ $ npm run test:cov
 
 ## Migration
 ```bash
-# npm run migration:generate --name=
-# npm run migration:create --name=
+# Generate
+npm run migration:generate --name=
+# Create
+npm run migration:create --name=
+# Run
+npm run migration:run
 ```
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
-
-# Typeorm
-## Usage repository pattern
-### Load typeorm global
+## Typeorm
+### Usage repository pattern
+- Load typeorm global
 ```bash
 @Module({
     imports: [
@@ -99,7 +90,7 @@ Nest is [MIT licensed](LICENSE).
 })
 export class AppModule {}
 ```
-### Inject typeorm repository to context
+- Inject typeorm repository to context
 ```bash
 @Module({
     controllers: [UserInternalController],
@@ -109,7 +100,7 @@ export class AppModule {}
 })
 export class UserModule {}
 ```
-### Use repository
+- Use repository
 ```bash
 @Injectable()
 export class UserService implements IUserService {
@@ -119,10 +110,24 @@ export class UserService implements IUserService {
     ) {}
 }
 ```
-# Nest interceptor
-## Usage globally
+## Nest interceptor
+- Usage globally
 ```bash
 const app = await NestFactory.create(AppModule);
 app.useGlobalInterceptors(new LoggingInterceptor());
 ```
 More details: [link](https://docs.nestjs.com/interceptors#binding-interceptors)
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](LICENSE).
