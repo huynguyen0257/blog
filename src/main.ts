@@ -1,8 +1,8 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { AppModule } from './app.module';
-import { DatabaseConfigType } from './config';
 import { TransformInterceptor } from './interceptor';
 
 async function bootstrap() {
@@ -11,8 +11,9 @@ async function bootstrap() {
     // Env config
     const configService = app.get(ConfigService);
     const globalPrefix = configService.get('api_prefix');
-    const databaseConfig = configService.get<DatabaseConfigType>('database');
+    const databaseConfig = configService.get<TypeOrmModuleOptions>('database');
     Logger.log(`🔌 databaseConfig: ${JSON.stringify(databaseConfig, undefined, 4)}`);
+    Logger.log(`🔌 globalPrefix: ${globalPrefix}`);
 
     // Rest config
     app.setGlobalPrefix(globalPrefix);

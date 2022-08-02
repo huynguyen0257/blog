@@ -1,32 +1,26 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from '@tommysg/user';
-import { join } from 'path';
-import { getConnectionOptions } from 'typeorm';
-import { envConfig, ConfigSchema } from './config';
-import { TransformInterceptor } from './interceptor';
-
+import { ConfigSchema, GeneralConfig, DatabaseConfig } from './config';
 @Module({
     imports: [
-        TypeOrmModule.forRootAsync({
-            useFactory: async () => {
-                return Object.assign(await getConnectionOptions(), {
-                    autoLoadEntities: true,
-                    entities: [join(__dirname, 'libs', '**', '*.entity.ts')],
-                });
-            },
-        }),
         ConfigModule.forRoot({
             envFilePath: '.env',
             isGlobal: true,
-            load: [envConfig],
+            load: [GeneralConfig, DatabaseConfig],
             validationSchema: ConfigSchema,
             validationOptions: {
                 allowUnknown: true,
                 abortEarly: true,
             },
+        }),
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => {
+                return configService.get('database');
+            },
+            inject: [ConfigService],
         }),
         // CacheModule.register<ClientOpts>({
         //     store: redisStore,

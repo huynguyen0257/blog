@@ -13,9 +13,9 @@ const publishProvider = [
 ];
 
 @Module({
+    imports: [TypeOrmModule.forFeature([UserEntity])],
     controllers: [UserInternalController],
     providers: publishProvider,
-    exports: [...publishProvider, TypeOrmModule.forFeature([UserEntity])],
-    imports: [TypeOrmModule.forFeature([UserEntity])]
+    exports: [...publishProvider, TypeOrmModule]
 })
 export class UserModule {}

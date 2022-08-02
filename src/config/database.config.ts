@@ -1,21 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ConfigService, registerAs } from '@nestjs/config';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-export type DatabaseConfigType = {
-    host: string;
-    port: number;
-};
-
-export const DatabaseConfig: DatabaseConfigType = Object.freeze({
+export const DatabaseConfig = registerAs('database', () => ({
+    type: 'postgres',
     host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT, 10) || 5432,
-});
+    port: +process.env.DB_PORT || 5432,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    synchronize: false,
+    // TODO: Check autoLoadEntities & entities options
+    // entities: ['libs/**/*.entity.ts'],
+    autoLoadEntities: true
+}));
 
 @Injectable()
 export class DatabaseConfigService {
     constructor(private configService: ConfigService) {}
 
-    get getConfig(): DatabaseConfigType {
-        return this.configService.get(DatabaseConfig.constructor.name);
+    get getConfig(): TypeOrmModuleOptions {
+        return this.configService.get('database');
     }
 }
