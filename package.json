@@ -43,7 +43,8 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.3.7"
+    "typeorm": "^0.3.7",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
@@ -92,7 +93,8 @@
       "^@tommysg/post(|/.*)$": "<rootDir>/libs/post/src/$1",
       "^@tommysg/category(|/.*)$": "<rootDir>/libs/category/src/$1",
       "^@tommysg/tag(|/.*)$": "<rootDir>/libs/tag/src/$1",
-      "^@tommysg/user(|/.*)$": "<rootDir>/libs/user/src/$1"
+      "^@tommysg/user(|/.*)$": "<rootDir>/libs/user/src/$1",
+      "^@tommysg/core(|/.*)$": "<rootDir>/libs/core/src/$1"
     }
   }
 }

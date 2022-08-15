@@ -1,7 +1,6 @@
 require('dotenv').config();
 import { DataSource } from 'typeorm';
 
-// TODO: Fix bug migration generate
 export const AppDataSource = new DataSource({
     type: 'postgres',
     host: process.env.DB_HOST,
@@ -11,7 +10,7 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME,
     synchronize: false,
     logging: true,
-    entities: ['dist/libs/**/*.entity.js'],
+    entities: ['dist/libs/**/*.table.js'],
     subscribers: [],
     migrations: ['migration/tables/**/*'],
 });

@@ -41,6 +41,12 @@
       ],
       "@tommysg/user/*": [
         "libs/user/src/*"
+      ],
+      "@tommysg/core": [
+        "libs/core/src"
+      ],
+      "@tommysg/core/*": [
+        "libs/core/src/*"
       ]
     }
   }

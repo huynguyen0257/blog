@@ -18,6 +18,8 @@
     "@tommysg/tag/(.*)": "<rootDir>/../libs/tag/src/$1",
     "@tommysg/tag": "<rootDir>/../libs/tag/src",
     "@tommysg/user/(.*)": "<rootDir>/../libs/user/src/$1",
-    "@tommysg/user": "<rootDir>/../libs/user/src"
+    "@tommysg/user": "<rootDir>/../libs/user/src",
+    "@tommysg/core/(.*)": "<rootDir>/../libs/core/src/$1",
+    "@tommysg/core": "<rootDir>/../libs/core/src"
   }
 }

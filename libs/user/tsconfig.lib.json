@@ -15,7 +15,7 @@
   ],
   "paths": {
     "@core": [
-      "src/core"
+      "@user/src/core"
     ]
   }
 }
