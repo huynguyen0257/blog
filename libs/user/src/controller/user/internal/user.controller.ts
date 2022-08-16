@@ -1,11 +1,12 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query } from '@nestjs/common';
+import { ApiOkResponse } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 import {
     CreateUserDto,
     DeleteUserDto,
+    DeleteUserUCInput,
     FilterUserDto,
     GetByIdUserDto,
-    IUserService,
     UpdateUserDto,
     UserUsecase,
     UserUsecaseType,
@@ -16,19 +17,19 @@ import { UserModuleInjectToken } from '../../../config';
 @Controller('user/internal')
 export class UserInternalController {
     constructor(
-        @Inject(UserModuleInjectToken.USER_SERVICE)
-        private readonly _userService: IUserService,
         @Inject(UserModuleInjectToken.USER_USECASE)
         private readonly _userUC: UserUsecase,
     ) {}
 
     @Get()
+    @ApiOkResponse({ type: [ViewUserDto] })
     getAll(@Query() filter: FilterUserDto): Observable<ViewUserDto[]> {
         // return this._userService.getAll(filter);
         return this._userUC.execute(UserUsecaseType.GET_ALL, filter);
     }
 
     @Get(':id')
+    @ApiOkResponse({ type: ViewUserDto })
     getById(@Param() payload: GetByIdUserDto): Observable<ViewUserDto> {
         // return this._userService.getById(id);
         return this._userUC.execute(UserUsecaseType.GET_BY_ID, payload);
@@ -46,9 +47,8 @@ export class UserInternalController {
         return this._userUC.execute(UserUsecaseType.UPDATE, payload);
     }
 
-    // TODO: Fix bug deleteId must be a string
-    @Delete(':id')
+    @Delete(':deleteId')
     delete(@Param() payload: DeleteUserDto): Observable<boolean> {
-        return this._userUC.execute(UserUsecaseType.DELETE, payload);
+        return this._userUC.execute(UserUsecaseType.DELETE, payload as DeleteUserUCInput);
     }
 }

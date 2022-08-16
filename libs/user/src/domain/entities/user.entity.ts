@@ -17,13 +17,16 @@ export type UserEntityProps = {
 };
 
 export type CreateUserEntity = Partial<Omit<UserEntityProps, 'createdAt'>> & {
-    id?: string
+    id?: string;
 };
 export type UpdateUserEntity = Partial<
-    Pick<UserEntityProps, 'firstName' | 'middleName' | 'lastName' | 'mobile' | 'lastLogin' | 'intro' | 'profile'>
+    Pick<
+        UserEntityProps,
+        'firstName' | 'middleName' | 'lastName' | 'mobile' | 'lastLogin' | 'intro' | 'profile'
+    >
 > & {
-    id?: string
-};;
+    id?: string;
+};
 
 export class UserEntity extends BaseEntity<string, UserEntityProps> {
     protected _name = 'UserEntity';

@@ -1,5 +1,5 @@
 import { Inject, InternalServerErrorException } from '@nestjs/common';
-import { IUsecase, MainUseCase } from '@tommysg/core';
+import { MainUseCase } from '@tommysg/core';
 import { UserModuleInjectToken } from '@tommysg/user/config';
 import {
     CreateUserUCInput,
