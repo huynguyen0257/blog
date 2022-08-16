@@ -1,10 +1,10 @@
 import { UserEntityProps } from '../../entities';
 
 export type UserRepoDto = UserEntityProps & {
-    id: string
+    id: string;
 };
 
 export type FilterUserRepoType = {
     name?: string;
-    email?: string
-}
+    email?: string;
+};

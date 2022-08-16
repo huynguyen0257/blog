@@ -1,19 +1,19 @@
-import { HttpException, HttpStatus, Inject, Injectable, NotImplementedException } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { IService } from '@tommysg/core';
 import { UserModuleInjectToken } from '@tommysg/user/config';
-import { UserEntity, UserRepoDto } from '@tommysg/user/domain';
-import { UserRepository } from '@tommysg/user/infra/database/user.repo.impl';
+import { IUserRepository, UserEntity, UserRepoDto } from '@tommysg/user/domain';
 import { from, lastValueFrom, map, mergeMap, Observable, of } from 'rxjs';
 import { CreateUserDto, DeleteUserDto, FilterUserDto, UpdateUserDto, ViewUserDto } from '../../dto';
 
-export interface IUserService extends IService<CreateUserDto, ViewUserDto, UpdateUserDto, DeleteUserDto, FilterUserDto> {}
+export interface IUserService
+    extends IService<CreateUserDto, ViewUserDto, UpdateUserDto, DeleteUserDto, FilterUserDto> {}
 
 // TODO: Complete UserService
 @Injectable()
 export class UserService implements IUserService {
     constructor(
         @Inject(UserModuleInjectToken.USER_REPO)
-        private readonly _userRepo: UserRepository,
+        private readonly _userRepo: IUserRepository,
     ) {}
 
     private map(entity: UserEntity): ViewUserDto {
@@ -83,12 +83,13 @@ export class UserService implements IUserService {
     delete(payload: DeleteUserDto): Observable<boolean> {
         return of(payload).pipe(
             mergeMap(async (payload) => {
-                if (!payload.id) throw new HttpException('Missing id', HttpStatus.BAD_REQUEST);
-                const daoDto = await lastValueFrom(this._userRepo.getById(payload.id));
-                return [daoDto, payload];
+                if (!payload.deleteId)
+                    throw new HttpException('Missing id', HttpStatus.BAD_REQUEST);
+                const daoDto = await lastValueFrom(this._userRepo.getById(payload.deleteId));
+                return { daoDto, payload };
             }),
-            mergeMap(([daoDto, payload]) => {
-                return this._userRepo.delete(payload.id);
+            mergeMap(({ daoDto, payload }) => {
+                return this._userRepo.delete(payload.deleteId);
             }),
         );
     }

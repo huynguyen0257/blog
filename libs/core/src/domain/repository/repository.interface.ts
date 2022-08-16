@@ -8,5 +8,5 @@ export interface IRepository<K extends string | number, T, F> {
     update(payload: T): Observable<boolean>;
     updateBulk(payload: T[]): Observable<boolean>;
     delete(id: K): Observable<boolean>;
-    deleteBulk(id: K[]): Observable<boolean>;
+    deleteBulk(ids: K[]): Observable<boolean>;
 }

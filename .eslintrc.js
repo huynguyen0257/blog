@@ -15,12 +15,12 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['.eslintrc.js', 'ormconfig-migration.js', 'ormconfig.js', "migration/**/*"],
+  ignorePatterns: ['.eslintrc.js', 'ormconfig-migration.js', 'data-source.ts', "migration/**/*"],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    "@typescript-eslint/no-empty-interface": false
+    "@typescript-eslint/no-empty-interface": 1
   },
 };
