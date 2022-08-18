@@ -2,7 +2,6 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { Allow, IsNotEmpty, IsString, validateOrReject } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 
-// TODO: Move to common libs
 export class DomainValidationError extends InternalServerErrorException {
     constructor(entity: string, error?: Error) {
         super(
