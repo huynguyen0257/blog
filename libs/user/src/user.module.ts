@@ -10,7 +10,7 @@ import {
     UserUsecase,
 } from './app';
 import { UserModuleInjectToken } from './config';
-import { UserInternalController } from './controller';
+import { UserInternalControllerV1, UserInternalControllerV2 } from './controller';
 import { UserRepository } from './infra/database/user.repo.impl';
 import { UserTable } from './infra/database/user.table';
 
@@ -51,7 +51,7 @@ const publishProvider = [
 
 @Module({
     imports: [TypeOrmModule.forFeature([UserTable])],
-    controllers: [UserInternalController],
+    controllers: [UserInternalControllerV1, UserInternalControllerV2],
     providers: publishProvider,
     // exports: [...publishProvider, TypeOrmModule]
     exports: [...publishProvider],

@@ -1,4 +1,4 @@
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -29,6 +29,9 @@ async function bootstrap() {
             transform: true,
         }),
     );
+    app.enableVersioning({
+        type: VersioningType.URI,
+    });
 
     // ------------ {{{OpenAPI setup}}} ------------
     const config = new DocumentBuilder()
