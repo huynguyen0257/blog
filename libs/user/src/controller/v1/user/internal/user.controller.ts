@@ -11,11 +11,14 @@ import {
     UserUsecase,
     UserUsecaseType,
     ViewUserDto,
-} from '../../../app';
-import { UserModuleInjectToken } from '../../../config';
+} from '@tommysg/user/app';
+import { UserModuleInjectToken } from '@tommysg/user/config';
 
-@Controller('user/internal')
-export class UserInternalController {
+@Controller({
+    path: 'user/internal',
+    version: '1',
+})
+export class UserInternalControllerV1 {
     constructor(
         @Inject(UserModuleInjectToken.USER_USECASE)
         private readonly _userUC: UserUsecase,
