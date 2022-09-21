@@ -49,8 +49,8 @@ export class UserRepository
                 return sql.getMany();
             }),
             map<UserTable[], UserRepoDto[]>((tables) => {
-                return tables.map((t) => ({
-                    ...t,
+                return tables.map((table) => ({
+                    ...table,
                 }));
             }),
         );

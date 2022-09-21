@@ -6,7 +6,6 @@ import {
     GetAllUserUsecase,
     GetByIdUserUsecase,
     UpdateUserUsecase,
-    UserService,
     UserUsecase,
 } from './app';
 import { UserModuleInjectToken } from './config';
@@ -15,10 +14,6 @@ import { UserRepository } from './infra/database/user.repo.impl';
 import { UserTable } from './infra/database/user.table';
 
 const publishProvider = [
-    {
-        provide: UserModuleInjectToken.USER_SERVICE,
-        useClass: UserService,
-    },
     {
         provide: UserModuleInjectToken.USER_REPO,
         useClass: UserRepository,

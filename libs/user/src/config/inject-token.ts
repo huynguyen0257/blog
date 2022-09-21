@@ -1,5 +1,4 @@
 export enum UserModuleInjectToken {
-    USER_SERVICE = 'user_module:user_service',
     USER_REPO = 'user_module:user_repository',
     USER_USECASE = 'user_module:user_usecase',
     GET_ALL_USER_USECASE = 'user_module:get_all_user_usecase',

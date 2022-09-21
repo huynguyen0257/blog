@@ -1,4 +1,11 @@
-import { DatabaseError, Metadata } from '.';
+import { Metadata } from '../types';
+import { SystemError } from './system.error';
+
+export class DatabaseError extends SystemError {
+    constructor(message: string) {
+        super(message, false);
+    }
+}
 
 export class DatabaseEstablishError extends DatabaseError {
     constructor(connectionConfig: string) {
