@@ -10,8 +10,7 @@ import {
 } from './app';
 import { UserModuleInjectToken } from './config';
 import { UserInternalControllerV1, UserInternalControllerV2 } from './controller';
-import { UserRepository } from './infra/database/user.repo.impl';
-import { UserTable } from './infra/database/user.table';
+import { UserRepository, UserTable } from './infra';
 
 const publishProvider = [
     {

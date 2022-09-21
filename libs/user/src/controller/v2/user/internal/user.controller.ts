@@ -38,19 +38,19 @@ export class UserInternalControllerV2 {
     }
 
     @Post()
-    create(@Body() payload: CreateUserDto): Observable<boolean> {
+    create(@Body() payload: CreateUserDto): Observable<void> {
         // return this._userService.create(payload);
         return this._userUC.execute(UserUsecaseType.CREATE, payload);
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() payload: UpdateUserDto): Observable<boolean> {
+    update(@Param('id') id: string, @Body() payload: UpdateUserDto): Observable<void> {
         payload.id = id;
         return this._userUC.execute(UserUsecaseType.UPDATE, payload);
     }
 
     @Delete(':deleteId')
-    delete(@Param() payload: DeleteUserDto): Observable<boolean> {
+    delete(@Param() payload: DeleteUserDto): Observable<void> {
         return this._userUC.execute(UserUsecaseType.DELETE, payload as DeleteUserUCInput);
     }
 }

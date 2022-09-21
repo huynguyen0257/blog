@@ -5,3 +5,4 @@ if (process.env.RUN_MODULE_STANDALONE) {
 export * from './user.module';
 export * from './domain';
 export * from './app';
+export * from './config';

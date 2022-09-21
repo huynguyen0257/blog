@@ -6,7 +6,7 @@ import { lastValueFrom, mergeMap, Observable, of } from 'rxjs';
 import { DeleteUserDto } from '../dto';
 
 export type DeleteUserUCInput = DeleteUserDto;
-export type DeleteUserUCOutput = Observable<boolean>;
+export type DeleteUserUCOutput = Observable<void>;
 
 export interface IDeleteUserUsecase extends IUsecase<DeleteUserUCInput, DeleteUserUCOutput> {}
 
@@ -21,11 +21,10 @@ export class DeleteUserUsecase implements IDeleteUserUsecase {
                 if (!payload.deleteId)
                     throw new HttpException('Missing id', HttpStatus.BAD_REQUEST);
                 const daoDto = await lastValueFrom(this._userRepo.getById(payload.deleteId));
+                if (!daoDto) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
                 return payload;
             }),
-            mergeMap((payload) => {
-                return this._userRepo.delete(payload.deleteId);
-            }),
+            mergeMap((payload) => this._userRepo.delete(payload.deleteId)),
         );
     }
 }

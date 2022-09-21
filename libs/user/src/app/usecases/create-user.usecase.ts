@@ -6,7 +6,7 @@ import { mergeMap, Observable, of } from 'rxjs';
 import { CreateUserDto } from '../dto';
 
 export type CreateUserUCInput = CreateUserDto;
-export type CreateUserUCOutput = Observable<boolean>;
+export type CreateUserUCOutput = Observable<void>;
 
 export interface ICreateUserUsecase extends IUsecase<CreateUserUCInput, CreateUserUCOutput> {}
 
@@ -20,12 +20,12 @@ export class CreateUserUsecase implements ICreateUserUsecase {
             mergeMap(async (payload) => {
                 return UserEntity.create(payload);
             }),
-            mergeMap((entity) => {
-                return this._userRepo.create({
+            mergeMap((entity) =>
+                this._userRepo.create({
                     id: entity.id,
                     ...entity.props,
-                });
-            }),
+                }),
+            ),
         );
     }
 }

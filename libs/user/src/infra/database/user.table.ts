@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class UserTable extends BaseEntity {
@@ -28,10 +28,10 @@ export class UserTable extends BaseEntity {
 
     @Column({ type: 'timestamp with time zone', name: 'updated_at', nullable: true })
     updatedAt: Date | null;
-    
+
     @Column({ type: 'timestamp with time zone', name: 'last_login', nullable: true })
     lastLogin: Date | null;
-    
+
     @Column({ type: 'text', name: 'intro', nullable: true })
     intro: string | null;
 

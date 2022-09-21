@@ -6,7 +6,7 @@ import { lastValueFrom, mergeMap, Observable, of } from 'rxjs';
 import { UpdateUserDto } from '../dto';
 
 export type UpdateUserUCInput = UpdateUserDto;
-export type UpdateUserUCOutput = Observable<boolean>;
+export type UpdateUserUCOutput = Observable<void>;
 
 export interface IUpdateUserUsecase extends IUsecase<UpdateUserUCInput, UpdateUserUCOutput> {}
 
@@ -27,9 +27,7 @@ export class UpdateUserUsecase implements IUpdateUserUsecase {
                 await entity.update(payload);
                 return entity;
             }),
-            mergeMap((entity) => {
-                return this._userRepo.update({ ...entity.props, id: entity.id });
-            }),
+            mergeMap((entity) => this._userRepo.update({ ...entity.props, id: entity.id })),
         );
     }
 }

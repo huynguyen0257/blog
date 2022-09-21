@@ -50,31 +50,28 @@ export abstract class BaseTypeormRepository<
             }),
         );
     }
-    create(payload: Dto): Observable<boolean> {
+    create(payload: Dto): Observable<void> {
         return of(payload).pipe(
             mergeMap(async (payload) => {
                 await this._ormRepo.insert(payload);
-                return true;
             }),
         );
     }
-    createBulk(payload: Dto[]): Observable<boolean> {
+    createBulk(payload: Dto[]): Observable<void> {
         return of(payload).pipe(
             mergeMap(async (payload) => {
                 await this._ormRepo.insert(payload);
-                return true;
             }),
         );
     }
-    update(payload: Dto): Observable<boolean> {
+    update(payload: Dto): Observable<void> {
         return of(payload).pipe(
             mergeMap(async (payload) => {
                 await this._ormRepo.update(payload.id, payload);
-                return true;
             }),
         );
     }
-    updateBulk(payload: Dto[]): Observable<boolean> {
+    updateBulk(payload: Dto[]): Observable<void> {
         return of(payload).pipe(
             mergeMap(async (payload) => {
                 const queryRunner = this._ormRepo.queryRunner;
@@ -91,19 +88,17 @@ export abstract class BaseTypeormRepository<
                     await queryRunner.rollbackTransaction();
                     throw error;
                 }
-                return true;
             }),
         );
     }
-    delete(id: Key): Observable<boolean> {
+    delete(id: Key): Observable<void> {
         return of(id).pipe(
             mergeMap(async (id) => {
                 await this._ormRepo.delete(id);
-                return true;
             }),
         );
     }
-    deleteBulk(ids: Key[]): Observable<boolean> {
+    deleteBulk(ids: Key[]): Observable<void> {
         return of(ids).pipe(
             mergeMap(async (ids) => {
                 const queryRunner = this._ormRepo.queryRunner;
@@ -120,7 +115,6 @@ export abstract class BaseTypeormRepository<
                     await queryRunner.rollbackTransaction();
                     throw error;
                 }
-                return true;
             }),
         );
     }
