@@ -1,10 +1,8 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
-import { Observable } from 'rxjs';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
     CreateUserDto,
     DeleteUserDto,
-    DeleteUserUCInput,
     FilterUserDto,
     GetByIdUserDto,
     UpdateUserDto,
@@ -13,7 +11,9 @@ import {
     ViewUserDto,
 } from '@tommysg/user/app';
 import { UserModuleInjectToken } from '@tommysg/user/config';
+import { Observable } from 'rxjs';
 
+@ApiTags('users')
 @Controller({
     path: 'user/internal',
     version: '1',
@@ -27,20 +27,17 @@ export class UserInternalControllerV1 {
     @Get()
     @ApiOkResponse({ type: [ViewUserDto] })
     getAll(@Query() filter: FilterUserDto): Observable<ViewUserDto[]> {
-        // return this._userService.getAll(filter);
         return this._userUC.execute(UserUsecaseType.GET_ALL, filter);
     }
 
     @Get(':id')
     @ApiOkResponse({ type: ViewUserDto })
     getById(@Param() payload: GetByIdUserDto): Observable<ViewUserDto> {
-        // return this._userService.getById(id);
         return this._userUC.execute(UserUsecaseType.GET_BY_ID, payload);
     }
 
     @Post()
     create(@Body() payload: CreateUserDto): Observable<void> {
-        // return this._userService.create(payload);
         return this._userUC.execute(UserUsecaseType.CREATE, payload);
     }
 
@@ -52,6 +49,6 @@ export class UserInternalControllerV1 {
 
     @Delete(':deleteId')
     delete(@Param() payload: DeleteUserDto): Observable<void> {
-        return this._userUC.execute(UserUsecaseType.DELETE, payload as DeleteUserUCInput);
+        return this._userUC.execute(UserUsecaseType.DELETE, payload);
     }
 }
