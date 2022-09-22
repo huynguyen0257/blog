@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+    blog_redis_master:
+        container_name: blog_redis_master
+        image: redis:alpine
+        ports: 
+            - 6379:6379
+        environment:
+            - REDIS_PASSWORD=dev@123
+            - TCP_PORTS="6379"
+            - REDIS_REPLICATION_MODE=master
+        command: redis-server --appendonly yes --masterauth dev@123 --requirepass dev@123
+        volumes:
+            - redis-master-data:/data
+        networks:
+            - blog
+
+    blog_redis_slave:
+        container_name: blog_redis_slave
+        image: redis:alpine
+        ports: 
+            - 6380:6379
+        environment:
+            - REDIS_PASSWORD=dev@123
+            - TCP_PORTS="6379"
+        command: redis-server --appendonly yes --slaveof blog_redis_master 6379 --masterauth dev@123 --requirepass dev@123
+        volumes:
+            - redis-slave-data:/data
+        depends_on:
+            - blog_redis_master
+        networks:
+            - blog
+
+    blog_postgres:
+        container_name: blog_postgres
+        image: postgres:latest
+        environment:
+            - POSTGRES_DB=blog
+            - POSTGRES_USER=dev
+            - POSTGRES_PASSWORD=dev@123
+            - PGDATA=/data/postgres
+        volumes:
+            - postgres-data:/data/postgres
+        ports:
+            - "5432:5432"
+        networks:
+            - blog
+
+    blog:
+        container_name: blog
+        image: node:18-alpine
+        working_dir: /usr/app
+        volumes:
+            - ./:/usr/app
+        ports:
+            - 3000:3000
+            - 9229:9229
+        env_file:
+            - .env
+        environment:
+            - DB_HOST=blog_postgres
+            - REDIS_HOST=blog_redis_master
+        depends_on:
+            - blog_postgres
+            - blog_redis_master
+            - blog_redis_slave
+        command: npm run start:dev
+        networks:
+            - blog
+
+volumes:
+    postgres-data:
+    redis-master-data:
+    redis-slave-data:
+
+networks:
+    blog:

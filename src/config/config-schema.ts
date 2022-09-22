@@ -8,4 +8,7 @@ export const ConfigSchema = joi.object({
     PORT: joi.number().default(3000),
     DB_HOST: joi.string().required(),
     DB_PORT: joi.number().required(),
+    REDIS_HOST: joi.string().required(),
+    REDIS_PORT: joi.number().required(),
+    REDIS_PASSWORD: joi.string().required(),
 });

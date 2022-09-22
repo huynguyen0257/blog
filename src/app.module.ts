@@ -1,14 +1,15 @@
-import { Module } from '@nestjs/common';
+import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from '@tommysg/user';
-import { ConfigSchema, GeneralConfig, DatabaseConfig } from './config';
+import { ConfigSchema, GeneralConfig, DatabaseConfig, CacheConfig } from './config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 @Module({
     imports: [
         ConfigModule.forRoot({
             envFilePath: '.env',
             isGlobal: true,
-            load: [GeneralConfig, DatabaseConfig],
+            load: [GeneralConfig, DatabaseConfig, CacheConfig],
             validationSchema: ConfigSchema,
             validationOptions: {
                 allowUnknown: true,
@@ -22,17 +23,21 @@ import { ConfigSchema, GeneralConfig, DatabaseConfig } from './config';
             },
             inject: [ConfigService],
         }),
-        // CacheModule.register<ClientOpts>({
-        //     store: redisStore,
-        //     password: 'dev@123',
-        //     db: 3,
-        //     ttl: 0,
-        //     isGlobal: true,
-        //     max: 10,
-        // }),
+        CacheModule.registerAsync({
+            imports: [ConfigModule],
+            useFactory: async (configService: ConfigService) => {
+                return configService.get('cache');
+            },
+            inject: [ConfigService],
+        }),
         UserModule,
     ],
     controllers: [],
-    providers: [],
+    providers: [
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: CacheInterceptor,
+        },
+    ],
 })
 export class AppModule {}
