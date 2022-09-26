@@ -1,0 +1,63 @@
+type User {
+    id: ID!
+    firstName: String!
+    middleName: String!
+    lastName: String!
+    mobile: String!
+    email: String!
+    intro: String!
+    profile: String!
+}
+
+type ReturnGetByIdData {
+    data: User!
+}
+
+input GetAllUserFilter {
+    name: String
+    email: String
+}
+
+type ReturnGetAllUserData {
+    data: [User]!
+}
+
+type Query {
+    getUserById(id: ID!): ReturnGetByIdData!
+    getAllUser(filter: GetAllUserFilter): ReturnGetAllUserData!
+}
+
+
+input CreateUserDto {
+    firstName: String!
+    middleName: String!
+    lastName: String!
+    mobile: String!
+    email: String!
+    password: String!
+    intro: String
+    profile: String
+}
+
+input UpdateUserDto {
+    id: ID!
+    firstName: String
+    middleName: String
+    lastName: String
+    mobile: String
+    intro: String
+    profile: String
+}
+
+input DeleteUserDto {
+    deleteId: ID!
+}
+
+type MutationReturn {
+    data: Boolean!
+}
+type Mutation {
+  createUser(createUserDto: CreateUserDto!): MutationReturn!
+  updateUser(updateUserDto: UpdateUserDto!): MutationReturn!
+  deleteUser(deleteUserDto: DeleteUserDto!): MutationReturn!
+}

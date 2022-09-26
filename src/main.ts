@@ -3,8 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { TransformInterceptor } from '@tommysg/core';
 import { AppModule } from './app.module';
-import { TransformInterceptor } from './interceptor';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -46,6 +46,6 @@ async function bootstrap() {
     // ------------ {{{Start app}}} ------------
     const port = process.env.PORT || 3333;
     await app.listen(port);
-    Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
+    Logger.log(`🚀 Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

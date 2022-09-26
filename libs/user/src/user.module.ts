@@ -10,6 +10,7 @@ import {
 } from './app';
 import { UserModuleInjectToken } from './config';
 import { UserInternalControllerV1, UserInternalControllerV2 } from './controller';
+import { UserResolver } from './graphql';
 import { UserRepository, UserTable } from './infra';
 
 const publishProvider = [
@@ -41,6 +42,7 @@ const publishProvider = [
         provide: UserModuleInjectToken.USER_USECASE,
         useClass: UserUsecase,
     },
+    UserResolver,
 ];
 
 @Module({

@@ -4,6 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from '@tommysg/user';
 import { ConfigSchema, GeneralConfig, DatabaseConfig, CacheConfig } from './config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -30,14 +33,23 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
             },
             inject: [ConfigService],
         }),
+        GraphQLModule.forRoot<ApolloDriverConfig>({
+            driver: ApolloDriver,
+            debug: false,
+            typePaths: ['./**/*.graphql'],
+            definitions: {
+                path: join(process.cwd(), 'src/graphql.ts'),
+            },
+        }),
         UserModule,
     ],
     controllers: [],
-    providers: [
-        {
-            provide: APP_INTERCEPTOR,
-            useClass: CacheInterceptor,
-        },
-    ],
+    // TODO: Config Cache Interceptor with graphql
+    // providers: [
+    //     {
+    //         provide: APP_INTERCEPTOR,
+    //         useClass: CacheInterceptor,
+    //     },
+    // ],
 })
 export class AppModule {}
