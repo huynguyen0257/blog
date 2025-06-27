@@ -9,7 +9,7 @@ describe('Delete User Usecase', () => {
     let usecase: UserUsecase;
     let ormRepo: Repository<UserTable>;
     const input = new DeleteUserDto();
-    input.deleteId = '16b70cb6-a02a-4911-adba-ede693115a11';
+    input.id = '16b70cb6-a02a-4911-adba-ede693115a11';
     const database = new UserTable();
     database.id = '16b70cb6-a02a-4911-adba-ede693115a11';
     database.firstName = 'Tommy';

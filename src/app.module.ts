@@ -3,7 +3,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from '@tommysg/user';
 import { ConfigSchema, GeneralConfig, DatabaseConfig, CacheConfig } from './config';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
@@ -35,11 +34,8 @@ import { join } from 'path';
         }),
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
-            debug: false,
-            typePaths: ['./**/*.graphql'],
-            definitions: {
-                path: join(process.cwd(), 'src/graphql.ts'),
-            },
+            autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+            sortSchema: true,
         }),
         UserModule,
     ],

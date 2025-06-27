@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Get all user"""
+type GetAllUserGraphQL {
+  data: [ViewUserGraphQL!]!
+}
+
+"""Get by id user"""
+type GetByIdUserGraphQL {
+  data: ViewUserGraphQL!
+}
+
+type Query {
+  getAllUser(email: String, name: String): GetAllUserGraphQL!
+  getUserById(id: String!): GetByIdUserGraphQL!
+}
+
+"""user"""
+type ViewUserGraphQL {
+  email: String!
+  firstName: String!
+  id: ID!
+  intro: String
+  lastName: String!
+  middleName: String!
+  mobile: String!
+  profile: String
+}

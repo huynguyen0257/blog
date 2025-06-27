@@ -26,15 +26,15 @@ export type UserUCInput =
     | UpdateUserUCInput
     | DeleteUserUCInput;
 
-export type UserUCOutput<T> = T extends GetAllUserUCInput
+export type UserUCOutput<T> = T extends UserUsecaseType.GET_ALL
     ? GetAllUserUCOutput
-    : T extends GetByIdUserUCInput
+    : T extends UserUsecaseType.GET_BY_ID
     ? GetByIdUserUCOutput
-    : T extends CreateUserUCInput
+    : T extends UserUsecaseType.CREATE
     ? CreateUserUCOutput
-    : T extends UpdateUserUCInput
+    : T extends UserUsecaseType.UPDATE
     ? UpdateUserUCOutput
-    : T extends DeleteUserUCInput
+    : T extends UserUsecaseType.DELETE
     ? DeleteUserUCOutput
     : unknown;
 
@@ -46,7 +46,7 @@ export enum UserUsecaseType {
     DELETE = 'delete',
 }
 
-export class UserUsecase extends MainUseCase<string, UserUCInput, UserUCOutput<UserUCInput>> {
+export class UserUsecase extends MainUseCase<string, UserUCInput, UserUCOutput<UserUsecaseType>> {
     protected _name = UserUsecase.name;
     constructor(
         @Inject(UserModuleInjectToken.GET_ALL_USER_USECASE)
@@ -69,7 +69,7 @@ export class UserUsecase extends MainUseCase<string, UserUCInput, UserUCOutput<U
         });
     }
 
-    public execute<T extends UserUCInput>(type: UserUsecaseType, payload: T): UserUCOutput<T> {
+    public execute<T extends UserUsecaseType>(type: T, payload: UserUCInput): UserUCOutput<T> {
         const command = this._actions.get(type);
         if (command) return command.execute(payload) as UserUCOutput<T>;
         throw new InternalServerErrorException({

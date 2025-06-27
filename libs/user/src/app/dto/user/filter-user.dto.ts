@@ -5,10 +5,10 @@ export class FilterUserDto {
     @IsString()
     @IsOptional()
     @ApiProperty({ required: false })
-    name: string;
+    name?: string;
 
     @IsString()
     @IsOptional()
     @ApiProperty({ required: false })
-    email: string;
+    email?: string;
 }

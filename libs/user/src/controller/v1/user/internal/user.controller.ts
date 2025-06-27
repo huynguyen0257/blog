@@ -47,7 +47,7 @@ export class UserInternalControllerV1 {
         return this._userUC.execute(UserUsecaseType.UPDATE, payload);
     }
 
-    @Delete(':deleteId')
+    @Delete(':id')
     delete(@Param() payload: DeleteUserDto): Observable<void> {
         return this._userUC.execute(UserUsecaseType.DELETE, payload);
     }

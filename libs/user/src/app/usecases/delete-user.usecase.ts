@@ -18,13 +18,12 @@ export class DeleteUserUsecase implements IDeleteUserUsecase {
     execute(payload: DeleteUserUCInput): DeleteUserUCOutput {
         return of(payload).pipe(
             mergeMap(async (payload) => {
-                if (!payload.deleteId)
-                    throw new HttpException('Missing id', HttpStatus.BAD_REQUEST);
-                const daoDto = await lastValueFrom(this._userRepo.getById(payload.deleteId));
+                if (!payload.id) throw new HttpException('Missing id', HttpStatus.BAD_REQUEST);
+                const daoDto = await lastValueFrom(this._userRepo.getById(payload.id));
                 if (!daoDto) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
                 return payload;
             }),
-            mergeMap((payload) => this._userRepo.delete(payload.deleteId)),
+            mergeMap((payload) => this._userRepo.delete(payload.id)),
         );
     }
 }
