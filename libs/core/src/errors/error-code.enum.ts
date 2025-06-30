@@ -4,5 +4,5 @@ export enum DomainErrorCode {
 
 export enum UseCaseErrorCode {
     NOT_FOUND = 20000,
-    VALICATION_ERROR = 20001,
+    VALIDATION_ERROR = 20001,
 }
